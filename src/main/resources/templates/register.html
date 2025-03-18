@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Înregistrare Utilizator</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin: 50px; }
+        .container { max-width: 400px; margin: auto; padding: 20px; border: 1px solid #ddd; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input, button { width: 100%; padding: 10px; margin-top: 10px; border: 1px solid #ccc; border-radius: 5px; }
+        button { background: #28a745; color: white; border: none; cursor: pointer; }
+        button:hover { background: #218838; }
+        .error { color: red; margin: 10px 0; }
+        a { text-decoration: none; color: #007bff; }
+        a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Înregistrare Utilizator</h2>
+    <p class="error" th:if="${error}" th:text="${error}"></p>
+    <form action="/register" method="post">
+        <input type="text" id="username" name="username" placeholder="Username" required>
+        <input type="email" id="email" name="email" placeholder="Email" required>
+        <input type="password" id="password" name="password" placeholder="Parola" required>
+        <button type="submit">Înregistrează-te</button>
+    </form>
+    <p>Ai deja un cont? <a href="/login">Autentifică-te aici</a></p>
+</div>
+</body>
+</html>

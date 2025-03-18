@@ -1,27 +1,104 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Anunturi Imobiliare</title>
+    <meta charset="UTF-8">
+    <title>Anunțuri Imobiliare</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 20px; background-color: #f5f5f5; }
+        .container { max-width: 900px; margin: auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .card { border: 1px solid #ddd; padding: 15px; margin: 10px 0; border-radius: 12px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        .card h2 { margin: 0; color: #333; }
+        .price { font-weight: bold; color: #28a745; }
+        .seller { color: gray; }
+        .category { font-style: italic; }
+        .success-message { color: green; font-weight: bold; border: 1px solid green; padding: 10px; border-radius: 8px; margin-bottom: 20px; }
+
+        /* Form styling */
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 12px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        form select, form input {
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        button {
+            padding: 10px 20px;
+            background: #007bff;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        button:hover { background: #0056b3; }
+        .nav a {
+            padding: 10px 15px;
+            background: #007bff;
+            color: white;
+            border-radius: 8px;
+            text-decoration: none;
+        }
+        .nav a:hover { background: #0056b3; }
+    </style>
 </head>
 <body>
-<h1>Lista Anunturi</h1>
-<ul>
-    <li th:each="anunt : ${anunturi}">
-        <p><strong>Titlu:</strong> <span th:text="${anunt.titlu}"></span></p>
-        <p><strong>Descriere:</strong> <span th:text="${anunt.descriere}"></span></p>
-        <p><strong>Pret:</strong> <span th:text="${anunt.pret}"></span></p>
-        <p><strong>Localitate:</strong> <span th:text="${anunt.localitate}"></span></p>
-        <p><strong>Contact:</strong> <span th:text="${anunt.contact}"></span></p>
-    </li>
-</ul>
+<div class="container">
+    <h1>Bun venit, <span th:text="${loggedInUser.username}" style="color: #007bff;"></span>!</h1>
 
-<h2>Adauga un Anunt</h2>
-<form action="/addAnunt" method="post">
-    <input type="text" name="titlu" placeholder="Titlu" required/>
-    <input type="text" name="descriere" placeholder="Descriere" required/>
-    <input type="number" step="0.01" name="pret" placeholder="Pret" required/>
-    <input type="text" name="localitate" placeholder="Localitate" required/>
-    <input type="text" name="contact" placeholder="Contact" required/>
-    <button type="submit">Adauga</button>
-</form>
+    <!-- Mesaj de succes -->
+    <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <!-- Navigare -->
+    <div class="nav">
+        <a href="/anunturile_mele">Anunțurile Mele</a>
+        <a href="/create-anunt">Adaugă Anunț</a>
+        <a href="/logout" style="background: red;">Deconectare</a>
+    </div>
+
+    <!-- Formular de filtrare îmbunătățit -->
+    <h2>Filtrare Anunțuri</h2>
+    <form action="/filter-anunturi" method="get">
+        <div>
+            <label for="categorie">Categorie:</label>
+            <select id="categorie" name="categorie">
+                <option value="-1">Toate</option>
+                <option value="0">Teren</option>
+                <option value="1">Apartament</option>
+                <option value="2">Casă</option>
+            </select>
+        </div>
+        <div>
+            <label>Preț minim:</label>
+            <input type="number" name="minPrice" step="0.01">
+        </div>
+        <div>
+            <label>Preț maxim:</label>
+            <input type="number" name="maxPrice" step="0.01">
+        </div>
+        <div>
+            <button type="submit">Filtrează</button>
+        </div>
+    </form>
+
+    <!-- Afișarea anunțurilor -->
+    <h2>Lista Anunțurilor</h2>
+    <div th:each="anunt : ${anunturi}" class="card">
+        <h2 th:text="${anunt.title}"></h2>
+        <p th:text="${anunt.description}"></p>
+        <p class="price">Preț: <span th:text="${anunt.price}"></span> EUR</p>
+        <p class="category">Categorie: <span th:text="${anunt.categorie == 0 ? 'Teren' : (anunt.categorie == 1 ? 'Apartament' : 'Casă')}"></span></p>
+        <p class="seller">Vânzător: <span th:text="${anunt.vanzator.username}"></span></p>
+    </div>
+</div>
 </body>
+</html>

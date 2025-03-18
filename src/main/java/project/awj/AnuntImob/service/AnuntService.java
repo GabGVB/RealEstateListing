@@ -1,8 +1,8 @@
 package project.awj.AnuntImob.service;
 
 import org.springframework.stereotype.Service;
-import project.awj.AnuntImob.model.Anunt;
 import project.awj.AnuntImob.repository.AnuntRepository;
+import project.awj.AnuntImob.model.Anunt;
 
 import java.util.List;
 
@@ -16,9 +16,5 @@ public class AnuntService {
 
     public List<Anunt> getAllAnunturi() {
         return anuntRepository.findAll();
-    }
-
-    public void addAnunt(Anunt anunt) {
-        anuntRepository.save(anunt);
     }
 }

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editează Anunț</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 600px; margin: auto; }
+        form { display: flex; flex-direction: column; }
+        label { margin-top: 10px; }
+        input, select, button { padding: 10px; margin-top: 5px; }
+        button { background: green; color: white; border: none; cursor: pointer; }
+        button:hover { background: darkgreen; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Editează Anunț</h1>
+
+
+    <form action="/edit-anunt" method="post">
+        <!-- ID-ul anunțului pentru identificarea corectă -->
+        <input type="hidden" name="anuntId" th:value="${anunt.id}"/>
+
+        <label for="title">Titlu:</label>
+        <input type="text" id="title" name="title" th:value="${anunt.title}" required>
+
+        <label for="description">Descriere:</label>
+        <input type="text" id="description" name="description" th:value="${anunt.description}" required>
+
+        <label for="price">Preț:</label>
+        <input type="number" id="price" name="price" th:value="${anunt.price}" required>
+
+        <label for="categorie">Categorie:</label>
+        <select id="categorie" name="categorie">
+            <option value="0" th:selected="${anunt.categorie == 0}">Teren</option>
+            <option value="1" th:selected="${anunt.categorie == 1}">Apartament</option>
+            <option value="2" th:selected="${anunt.categorie == 2}">Casă</option>
+        </select>
+        <p th:if="${errorMessage}" style="color: red;" th:text="${errorMessage}"></p>
+        <!-- Buton pentru salvarea modificărilor -->
+        <button type="submit">Salvează Modificările</button>
+    </form>
+    <a href="/anunturile_mele">Înapoi la Anunțurile Mele</a>
+</div>
+</body>
+</html>

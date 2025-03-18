@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Anunțurile Mele</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 20px; background: #f5f5f5; }
+        .container { max-width: 800px; margin: auto; padding: 20px; background: white; border-radius: 12px; box-shadow: 0 0 20px rgba(0,0,0,0.1); }
+        .card { border: 1px solid #ddd; padding: 15px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; border-radius: 8px; border: none; color: white; cursor: pointer; }
+        .delete-button { background: red; }
+        .edit-button { background: #007bff; }
+        button:hover { opacity: 0.9; }
+        .success-message { color: green; font-weight: bold; padding: 10px; border: 1px solid green; border-radius: 8px; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Anunțurile Mele</h1>
+
+    <!-- Mesaj de succes -->
+    <div th:if="${successMessage}" class="success-message">
+        <p th:text="${successMessage}"></p>
+    </div>
+
+    <a href="/" style="text-decoration: none; color: white; background: #28a745; padding: 10px; border-radius: 8px;">Înapoi la pagina principală</a>
+
+    <!-- Listarea anunțurilor -->
+    <div th:each="anunt : ${anunturi}" class="card">
+        <h2 th:text="${anunt.title}"></h2>
+        <p th:text="${anunt.description}"></p>
+        <p class="price">Preț: <span th:text="${anunt.price}"></span> EUR</p>
+        <p class="category">Categorie: <span th:text="${anunt.categorie == 0 ? 'Teren' : (anunt.categorie == 1 ? 'Apartament' : 'Casă')}"></span></p>
+
+        <!-- Buton de ștergere cu confirmare -->
+        <form action="/delete-anunt" method="post">
+            <input type="hidden" name="anuntId" th:value="${anunt.id}">
+            <button class="delete-button">Șterge</button>
+        </form>
+
+        <!-- Buton de editare -->
+        <a th:href="@{/edit-anunt(anuntId=${anunt.id})}">
+            <button class="edit-button">Editează</button>
+        </a>
+    </div>
+</div>
+</body>
+</html>

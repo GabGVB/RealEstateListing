@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Creează un anunț</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 400px; margin: auto; }
+        input, select, textarea, button { display: block; width: 100%; margin-top: 10px; padding: 8px; }
+        button { background-color: #28a745; color: white; border: none; }
+        button:hover { background-color: #218838; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>Creează un anunț nou</h1>
+    <form action="/create-anunt" method="post">
+        <label for="title">Titlu:</label>
+        <input type="text" id="title" name="title" >
+
+        <label for="description">Descriere:</label>
+        <textarea id="description" name="description" ></textarea>
+
+        <label for="price">Preț:</label>
+        <input type="text" step="0.01" id="price" name="price" required>
+
+        <label for="categorie">Categorie:</label>
+        <select id="categorie" name="categorie" required>
+            <option value="0">Teren</option>
+            <option value="1">Apartament</option>
+            <option value="2">Casă</option>
+        </select>
+
+        <button type="submit">Creează Anunț</button>
+    </form>
+    <p th:if="${errorMessage}" th:text="${errorMessage}" style="color: red;"></p>
+    <p><a href="/">Înapoi la pagina principală</a></p>
+</div>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Confirmare Ștergere</title>
+    <style>
+        body { font-family: 'Arial', sans-serif; margin: 20px; }
+        .container { max-width: 400px; margin: auto; text-align: center; padding: 20px; background: white; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); }
+        button { padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer; }
+        .confirm-button { background: red; color: white; }
+        .cancel-button { background: #007bff; color: white; }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h2>Confirmare Ștergere</h2>
+    <p>Sunteți sigur că doriți să ștergeți acest anunț?</p>
+
+    <form action="/confirm-delete" method="post">
+        <input type="hidden" name="anuntId" th:value="${confirmDelete}">
+        <button class="confirm-button" type="submit">Confirmă Ștergerea</button>
+    </form>
+
+    <a href="/" class="cancel-button">Anulează</a>
+</div>
+</body>
+</html>
